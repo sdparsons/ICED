@@ -143,13 +143,13 @@ sim1 <- sim_ICED(struc,
 head(sim1)
 ```
 
-    ##           T1         T2        T3         T4
-    ## 1  0.8529433  0.2744556  3.620116  0.3717968
-    ## 2 -2.1493394 -4.7157453 -3.846986 -0.9015089
-    ## 3  2.6485623  2.0071485  5.726791  6.5298138
-    ## 4 -7.9424647 -3.0994557 -2.031928 -3.8026836
-    ## 5  6.0055917 -1.2844163  1.574438  1.9936629
-    ## 6  1.9358403 -1.0520566  2.302554  5.3258177
+    ##           T1         T2         T3        T4
+    ## 1  0.3859495  2.9976520  2.2406373 -2.213329
+    ## 2 -1.3263371 -1.6079571 -2.5485554 -2.141473
+    ## 3  3.1847058 -1.6158796 -3.2294465 -3.459617
+    ## 4  2.6249049  3.6541991  0.9069199 -1.092978
+    ## 5  3.1363230  4.1303944  1.3504050  1.080929
+    ## 6  2.0919728 -0.4947136  0.8099815 -3.081045
 
 we can also examine how well `sim_ICED` has recovered our variance
 parameters by setting `check_recovery = TRUE`. lets simulate two
@@ -170,9 +170,9 @@ sim2 <- sim_ICED(struc,
     ##    time     day session   error 
     ##      10       2       1       3 
     ## [1] "model parameters recovered:"
-    ## [1] "ICC1 = 0.623757288017518"
+    ## [1] "ICC1 = 0.613690052213968"
     ##    timeest     dayest sessionest       eest 
-    ##  9.9577122  1.8309141  0.9791315  3.1963237
+    ##   9.726541   2.136493   0.955077   3.031161
 
 ``` r
 sim3 <- sim_ICED(struc,
@@ -189,9 +189,9 @@ sim3 <- sim_ICED(struc,
     ##    time     day session   error 
     ##      10       2       1       3 
     ## [1] "model parameters recovered:"
-    ## [1] "ICC1 = 0.681300341947098"
-    ##      timeest       dayest   sessionest         eest 
-    ## 12.256490408  2.478900145  0.000100193  3.254358449
+    ## [1] "ICC1 = 0.534068517674343"
+    ##    timeest     dayest sessionest       eest 
+    ##   4.673251   1.373817   1.457165   1.246050
 
 ### str2cov
 
@@ -225,34 +225,34 @@ res1 <- run_ICED(model = syn,
 ```
 
     ## $ICC
-    ## [1] 0.6429239
+    ## [1] 0.6171321
     ## 
     ## $ICC2
-    ## [1] 0.833994
+    ## [1] 0.8211038
     ## 
     ## $timeest
-    ## [1] 10.75619
+    ## [1] 9.435869
     ## 
     ## $dayest
-    ## [1] 2.192604
+    ## [1] 1.863148
     ## 
     ## $sessionest
-    ## [1] 0.8357306
+    ## [1] 1.083308
     ## 
     ## $eest
-    ## [1] 2.94559
+    ## [1] 2.907544
     ## 
     ## $EffectiveError
-    ## [1] 2.141013
+    ## [1] 2.055819
     ## 
     ## $AbsoluteError
-    ## [1] 2.111276
+    ## [1] 2.019563
     ## 
     ## $phi_dependability
-    ## [1] 0.8359214
+    ## [1] 0.8237026
     ## 
     ## $lavaan
-    ## lavaan 0.6-8 ended normally after 211 iterations
+    ## lavaan 0.6-8 ended normally after 205 iterations
     ## 
     ##   Estimator                                         ML
     ##   Optimization method                           NLMINB
@@ -264,9 +264,9 @@ res1 <- run_ICED(model = syn,
     ##                                                       
     ## Model Test User Model:
     ##                                                       
-    ##   Test statistic                                 4.325
+    ##   Test statistic                                 3.115
     ##   Degrees of freedom                                 6
-    ##   P-value (Chi-square)                           0.633
+    ##   P-value (Chi-square)                           0.794
 
 we can also bootstrap our estimates. The output now includes 95% CIs on
 the ICC and ICC2. Best to use more than 10 boots, but set to 10 for
@@ -283,40 +283,40 @@ run_ICED(model = syn,
     ## Warning in norm.inter(t, alpha): extreme order statistics used as endpoints
 
     ## $ICC
-    ## [1] 0.6429239
+    ## [1] 0.6171321
     ## 
     ## $ICC_CIs
-    ## [1] 0.6214441 0.6793939
+    ## [1] 0.5848186 0.6350318
     ## 
     ## $ICC2
-    ## [1] 0.833994
+    ## [1] 0.8211038
     ## 
     ## $ICC2_CIs
-    ## [1] 0.8280621 0.8406967
+    ## [1] 0.8072732 0.8372958
     ## 
     ## $timeest
-    ## [1] 10.75619
+    ## [1] 9.435869
     ## 
     ## $dayest
-    ## [1] 2.192604
+    ## [1] 1.863148
     ## 
     ## $sessionest
-    ## [1] 0.8357306
+    ## [1] 1.083308
     ## 
     ## $eest
-    ## [1] 2.94559
+    ## [1] 2.907544
     ## 
     ## $EffectiveError
-    ## [1] 2.141013
+    ## [1] 2.055819
     ## 
     ## $AbsoluteError
-    ## [1] 2.111276
+    ## [1] 2.019563
     ## 
     ## $phi_dependability
-    ## [1] 0.8359214
+    ## [1] 0.8237026
     ## 
     ## $lavaan
-    ## lavaan 0.6-8 ended normally after 211 iterations
+    ## lavaan 0.6-8 ended normally after 205 iterations
     ## 
     ##   Estimator                                         ML
     ##   Optimization method                           NLMINB
@@ -328,9 +328,9 @@ run_ICED(model = syn,
     ##                                                       
     ## Model Test User Model:
     ##                                                       
-    ##   Test statistic                                 4.325
+    ##   Test statistic                                 3.115
     ##   Degrees of freedom                                 6
-    ##   P-value (Chi-square)                           0.633
+    ##   P-value (Chi-square)                           0.794
 
 ## model comparison
 
@@ -425,10 +425,10 @@ syntax2 <- iced_syntax(struc,
     ## T4~1
     ## !set variances
     ##  
-    ##  time == 10.7561916194784
-    ##  day == 2.19260400095988
+    ##  time == 9.43586880843286
+    ##  day == 1.86314789770665
     ##  session == 0
-    ##  e == 2.94559036661988
+    ##  e == 2.90754378952659
 
 ``` r
 res2 <- run_ICED(syntax2,
@@ -436,31 +436,31 @@ res2 <- run_ICED(syntax2,
 ```
 
     ## $ICC
-    ## [1] 0.676729
+    ## [1] 0.6641909
     ## 
     ## $ICC2
-    ## [1] 0.8544193
+    ## [1] 0.8505128
     ## 
     ## $timeest
-    ## [1] 10.75619
+    ## [1] 9.435869
     ## 
     ## $dayest
-    ## [1] 2.192604
+    ## [1] 1.863148
     ## 
     ## $sessionest
     ## [1] 0
     ## 
     ## $eest
-    ## [1] 2.94559
+    ## [1] 2.907544
     ## 
     ## $EffectiveError
-    ## [1] 1.8327
+    ## [1] 1.65846
     ## 
     ## $AbsoluteError
-    ## [1] 1.8327
+    ## [1] 1.65846
     ## 
     ## $phi_dependability
-    ## [1] 0.8544193
+    ## [1] 0.8505128
     ## 
     ## $lavaan
     ## lavaan 0.6-8 ended normally after 1 iterations
@@ -475,7 +475,7 @@ res2 <- run_ICED(syntax2,
     ##                                                       
     ## Model Test User Model:
     ##                                                       
-    ##   Test statistic                               100.028
+    ##   Test statistic                               169.387
     ##   Degrees of freedom                                10
     ##   P-value (Chi-square)                           0.000
 
@@ -486,9 +486,9 @@ anova(res1$lavaan,
 
     ## Chi-Squared Difference Test
     ## 
-    ##             Df   AIC   BIC   Chisq Chisq diff Df diff Pr(>Chisq)    
-    ## res1$lavaan  6 39726 39771   4.325                                  
-    ## res2$lavaan 10 39814 39836 100.028     95.703       4  < 2.2e-16 ***
+    ##             Df   AIC   BIC    Chisq Chisq diff Df diff Pr(>Chisq)    
+    ## res1$lavaan  6 39500 39545   3.1148                                  
+    ## res2$lavaan 10 39658 39681 169.3869     166.27       4  < 2.2e-16 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -744,7 +744,7 @@ m0 <- lavaan::lavaan(model = syn,
 summary(m1)
 ```
 
-    ## lavaan 0.6-8 ended normally after 336 iterations
+    ## lavaan 0.6-8 ended normally after 389 iterations
     ## 
     ##   Estimator                                         ML
     ##   Optimization method                           NLMINB
@@ -757,12 +757,12 @@ summary(m1)
     ##                                                       
     ## Model Test User Model:
     ##                                                       
-    ##   Test statistic                                13.357
+    ##   Test statistic                                 9.192
     ##   Degrees of freedom                                12
-    ##   P-value (Chi-square)                           0.344
+    ##   P-value (Chi-square)                           0.686
     ##   Test statistic for each group:
-    ##     high                                         3.653
-    ##     low                                          9.704
+    ##     high                                         3.820
+    ##     low                                          5.372
     ## 
     ## Parameter Estimates:
     ## 
@@ -861,10 +861,10 @@ summary(m1)
     ## 
     ## Intercepts:
     ##                    Estimate  Std.Err  z-value  P(>|z|)
-    ##    .T1                0.102    0.236    0.434    0.665
-    ##    .T2                0.135    0.236    0.573    0.567
-    ##    .T3                0.203    0.236    0.859    0.390
-    ##    .T4                0.178    0.236    0.753    0.451
+    ##    .T1               -0.014    0.301   -0.047    0.963
+    ##    .T2               -0.133    0.301   -0.444    0.657
+    ##    .T3               -0.124    0.301   -0.414    0.679
+    ##    .T4               -0.076    0.301   -0.253    0.800
     ##     T                 0.000                           
     ##     day1              0.000                           
     ##     day2              0.000                           
@@ -878,16 +878,16 @@ summary(m1)
     ## 
     ## Variances:
     ##                    Estimate  Std.Err  z-value  P(>|z|)
-    ##     T       (ltt1)    4.931    0.733    6.725    0.000
-    ##     day1    (ltd1)    0.246    0.082    2.988    0.003
-    ##     day2    (ltd1)    0.246    0.082    2.988    0.003
-    ##     ses1    (lts1)    0.228    0.061    3.762    0.000
-    ##     ses2    (lts1)    0.228    0.061    3.762    0.000
-    ##     ses3    (lts1)    0.228    0.061    3.762    0.000
-    ##     E1      (ltg1)    0.168    0.024    7.073    0.000
-    ##     E2      (ltg1)    0.168    0.024    7.073    0.000
-    ##     E3      (ltg1)    0.168    0.024    7.073    0.000
-    ##     E4      (ltg1)    0.168    0.024    7.073    0.000
+    ##     T       (ltt1)    8.399    1.223    6.869    0.000
+    ##     day1    (ltd1)    0.224    0.083    2.697    0.007
+    ##     day2    (ltd1)    0.224    0.083    2.697    0.007
+    ##     ses1    (lts1)    0.238    0.065    3.672    0.000
+    ##     ses2    (lts1)    0.238    0.065    3.672    0.000
+    ##     ses3    (lts1)    0.238    0.065    3.672    0.000
+    ##     E1      (ltg1)    0.183    0.026    7.073    0.000
+    ##     E2      (ltg1)    0.183    0.026    7.073    0.000
+    ##     E3      (ltg1)    0.183    0.026    7.073    0.000
+    ##     E4      (ltg1)    0.183    0.026    7.073    0.000
     ##    .T1                0.000                           
     ##    .T2                0.000                           
     ##    .T3                0.000                           
@@ -984,10 +984,10 @@ summary(m1)
     ## 
     ## Intercepts:
     ##                    Estimate  Std.Err  z-value  P(>|z|)
-    ##    .T1               -0.135    0.176   -0.770    0.441
-    ##    .T2               -0.167    0.176   -0.949    0.343
-    ##    .T3               -0.074    0.176   -0.421    0.674
-    ##    .T4               -0.112    0.176   -0.637    0.524
+    ##    .T1               -0.118    0.171   -0.688    0.491
+    ##    .T2               -0.153    0.171   -0.894    0.372
+    ##    .T3               -0.153    0.171   -0.897    0.370
+    ##    .T4               -0.193    0.171   -1.130    0.259
     ##     T                 0.000                           
     ##     day1              0.000                           
     ##     day2              0.000                           
@@ -1001,16 +1001,16 @@ summary(m1)
     ## 
     ## Variances:
     ##                    Estimate  Std.Err  z-value  P(>|z|)
-    ##     T       (ltt2)    2.343    0.373    6.281    0.000
-    ##     day1    (ltd2)    0.274    0.094    2.921    0.003
-    ##     day2    (ltd2)    0.274    0.094    2.921    0.003
-    ##     ses1    (lts2)    0.226    0.074    3.055    0.002
-    ##     ses2    (lts2)    0.226    0.074    3.055    0.002
-    ##     ses3    (lts2)    0.226    0.074    3.055    0.002
-    ##     E1      (ltg2)    0.241    0.034    7.080    0.000
-    ##     E2      (ltg2)    0.241    0.034    7.080    0.000
-    ##     E3      (ltg2)    0.241    0.034    7.080    0.000
-    ##     E4      (ltg2)    0.241    0.034    7.080    0.000
+    ##     T       (ltt2)    2.253    0.355    6.351    0.000
+    ##     day1    (ltd2)    0.217    0.084    2.564    0.010
+    ##     day2    (ltd2)    0.217    0.084    2.564    0.010
+    ##     ses1    (lts2)    0.193    0.073    2.641    0.008
+    ##     ses2    (lts2)    0.193    0.073    2.641    0.008
+    ##     ses3    (lts2)    0.193    0.073    2.641    0.008
+    ##     E1      (ltg2)    0.259    0.037    7.083    0.000
+    ##     E2      (ltg2)    0.259    0.037    7.083    0.000
+    ##     E3      (ltg2)    0.259    0.037    7.083    0.000
+    ##     E4      (ltg2)    0.259    0.037    7.083    0.000
     ##    .T1                0.000                           
     ##    .T2                0.000                           
     ##    .T3                0.000                           
@@ -1018,20 +1018,20 @@ summary(m1)
     ## 
     ## Constraints:
     ##                                                |Slack|
-    ##     lattimegroup1 - (0.0001)                     4.931
-    ##     lattimegroup2 - (0.0001)                     2.343
-    ##     latdaygroup1 - (0.0001)                      0.246
-    ##     latdaygroup2 - (0.0001)                      0.274
-    ##     latsessiongroup1 - (0.0001)                  0.228
-    ##     latsessiongroup2 - (0.0001)                  0.226
-    ##     lategroup1 - (0.0001)                        0.168
-    ##     lategroup2 - (0.0001)                        0.241
+    ##     lattimegroup1 - (0.0001)                     8.399
+    ##     lattimegroup2 - (0.0001)                     2.253
+    ##     latdaygroup1 - (0.0001)                      0.224
+    ##     latdaygroup2 - (0.0001)                      0.216
+    ##     latsessiongroup1 - (0.0001)                  0.238
+    ##     latsessiongroup2 - (0.0001)                  0.193
+    ##     lategroup1 - (0.0001)                        0.183
+    ##     lategroup2 - (0.0001)                        0.259
 
 ``` r
 summary(m0)
 ```
 
-    ## lavaan 0.6-8 ended normally after 394 iterations
+    ## lavaan 0.6-8 ended normally after 422 iterations
     ## 
     ##   Estimator                                         ML
     ##   Optimization method                           NLMINB
@@ -1044,12 +1044,12 @@ summary(m0)
     ##                                                       
     ## Model Test User Model:
     ##                                                       
-    ##   Test statistic                                29.071
+    ##   Test statistic                                48.587
     ##   Degrees of freedom                                16
-    ##   P-value (Chi-square)                           0.023
+    ##   P-value (Chi-square)                           0.000
     ##   Test statistic for each group:
-    ##     high                                        10.521
-    ##     low                                         18.550
+    ##     high                                        16.780
+    ##     low                                         31.807
     ## 
     ## Parameter Estimates:
     ## 
@@ -1148,10 +1148,10 @@ summary(m0)
     ## 
     ## Intercepts:
     ##                    Estimate  Std.Err  z-value  P(>|z|)
-    ##    .T1                0.102    0.208    0.492    0.623
-    ##    .T2                0.135    0.208    0.650    0.516
-    ##    .T3                0.203    0.208    0.975    0.330
-    ##    .T4                0.178    0.208    0.855    0.393
+    ##    .T1               -0.014    0.245   -0.057    0.954
+    ##    .T2               -0.133    0.245   -0.546    0.585
+    ##    .T3               -0.124    0.245   -0.509    0.611
+    ##    .T4               -0.076    0.245   -0.311    0.755
     ##     T                 0.000                           
     ##     day1              0.000                           
     ##     day2              0.000                           
@@ -1165,16 +1165,16 @@ summary(m0)
     ## 
     ## Variances:
     ##                    Estimate  Std.Err  z-value  P(>|z|)
-    ##     T       (time)    3.634    0.391    9.299    0.000
-    ##     day1     (day)    0.265    0.062    4.250    0.000
-    ##     day2     (day)    0.265    0.062    4.250    0.000
-    ##     ses1    (sssn)    0.222    0.047    4.695    0.000
-    ##     ses2    (sssn)    0.222    0.047    4.695    0.000
-    ##     ses3    (sssn)    0.222    0.047    4.695    0.000
-    ##     E1         (e)    0.206    0.021   10.006    0.000
-    ##     E2         (e)    0.206    0.021   10.006    0.000
-    ##     E3         (e)    0.206    0.021   10.006    0.000
-    ##     E4         (e)    0.206    0.021   10.006    0.000
+    ##     T       (time)    5.325    0.557    9.554    0.000
+    ##     day1     (day)    0.220    0.059    3.711    0.000
+    ##     day2     (day)    0.220    0.059    3.711    0.000
+    ##     ses1    (sssn)    0.216    0.049    4.426    0.000
+    ##     ses2    (sssn)    0.216    0.049    4.426    0.000
+    ##     ses3    (sssn)    0.216    0.049    4.426    0.000
+    ##     E1         (e)    0.221    0.022   10.006    0.000
+    ##     E2         (e)    0.221    0.022   10.006    0.000
+    ##     E3         (e)    0.221    0.022   10.006    0.000
+    ##     E4         (e)    0.221    0.022   10.006    0.000
     ##    .T1                0.000                           
     ##    .T2                0.000                           
     ##    .T3                0.000                           
@@ -1271,10 +1271,10 @@ summary(m0)
     ## 
     ## Intercepts:
     ##                    Estimate  Std.Err  z-value  P(>|z|)
-    ##    .T1               -0.135    0.208   -0.650    0.516
-    ##    .T2               -0.167    0.208   -0.801    0.423
-    ##    .T3               -0.074    0.208   -0.356    0.722
-    ##    .T4               -0.112    0.208   -0.538    0.591
+    ##    .T1               -0.118    0.245   -0.481    0.631
+    ##    .T2               -0.153    0.245   -0.624    0.532
+    ##    .T3               -0.153    0.245   -0.627    0.531
+    ##    .T4               -0.193    0.245   -0.789    0.430
     ##     T                 0.000                           
     ##     day1              0.000                           
     ##     day2              0.000                           
@@ -1288,16 +1288,16 @@ summary(m0)
     ## 
     ## Variances:
     ##                    Estimate  Std.Err  z-value  P(>|z|)
-    ##     T       (time)    3.634    0.391    9.299    0.000
-    ##     day1     (day)    0.265    0.062    4.250    0.000
-    ##     day2     (day)    0.265    0.062    4.250    0.000
-    ##     ses1    (sssn)    0.222    0.047    4.695    0.000
-    ##     ses2    (sssn)    0.222    0.047    4.695    0.000
-    ##     ses3    (sssn)    0.222    0.047    4.695    0.000
-    ##     E1         (e)    0.206    0.021   10.006    0.000
-    ##     E2         (e)    0.206    0.021   10.006    0.000
-    ##     E3         (e)    0.206    0.021   10.006    0.000
-    ##     E4         (e)    0.206    0.021   10.006    0.000
+    ##     T       (time)    5.325    0.557    9.554    0.000
+    ##     day1     (day)    0.220    0.059    3.711    0.000
+    ##     day2     (day)    0.220    0.059    3.711    0.000
+    ##     ses1    (sssn)    0.216    0.049    4.426    0.000
+    ##     ses2    (sssn)    0.216    0.049    4.426    0.000
+    ##     ses3    (sssn)    0.216    0.049    4.426    0.000
+    ##     E1         (e)    0.221    0.022   10.006    0.000
+    ##     E2         (e)    0.221    0.022   10.006    0.000
+    ##     E3         (e)    0.221    0.022   10.006    0.000
+    ##     E4         (e)    0.221    0.022   10.006    0.000
     ##    .T1                0.000                           
     ##    .T2                0.000                           
     ##    .T3                0.000                           
@@ -1305,9 +1305,9 @@ summary(m0)
     ## 
     ## Constraints:
     ##                                                |Slack|
-    ##     time - (0.0001)                              3.634
-    ##     day - (0.0001)                               0.265
-    ##     session - (0.0001)                           0.222
+    ##     time - (0.0001)                              5.325
+    ##     day - (0.0001)                               0.220
+    ##     session - (0.0001)                           0.216
 
 ``` r
 anova(m1, m0)
@@ -1315,8 +1315,8 @@ anova(m1, m0)
 
     ## Chi-Squared Difference Test
     ## 
-    ##    Df    AIC    BIC  Chisq Chisq diff Df diff Pr(>Chisq)   
-    ## m1 12 2363.2 2416.0 13.357                                 
-    ## m0 16 2371.0 2410.5 29.071     15.713       4   0.003429 **
+    ##    Df    AIC    BIC   Chisq Chisq diff Df diff Pr(>Chisq)    
+    ## m1 12 2412.6 2465.3  9.1921                                  
+    ## m0 16 2444.0 2483.6 48.5866     39.394       4  5.775e-08 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
