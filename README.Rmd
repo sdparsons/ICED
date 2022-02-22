@@ -18,7 +18,11 @@ source("sim_ICED.R")
 
 ```
 
-## ICED
+
+<img src="inst/hexlogo/ICED_hexlogo.png" height="300"/>
+
+## ICED: IntraClass Effect Decomposition
+
 
 This script is intended to highlight progress and functionality with the ICED package
 
