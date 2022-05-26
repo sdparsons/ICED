@@ -1,0 +1,7 @@
+^LICENSE\.md$
+^/ICED.Rproj$
+^/inst/elife-35718-fig4-v2.jpg$
+^.*\.Rproj$
+^\.Rproj\.user$
+^README.Rmd
+^NEWS.Rmd

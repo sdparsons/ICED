@@ -1,0 +1,25 @@
+---
+output: html_document
+---
+
+<!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "NEWS-"
+)
+```
+
+# News
+
+## current intended improvements
+* add bootstrapping for each variance component as well as ICC and ICC2
+
+## changelog
+
+ICED v0.0.1
+==============
+changes:
+* began converting to package

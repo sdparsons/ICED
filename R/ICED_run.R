@@ -1,20 +1,47 @@
-# run_ICED
-
-# Wrapper function for lavaan to run an ICED model generated with ICED_syntax(), or manually coded
-
-# library("tidyverse)
-# library("lavaan")
-# library("boot")
-
-# source("ICED_syntax.R")
-# source("ICED_boot.R)
-
-
+#' run ICED models
+#' 
+#' Wrapper function for lavaan to run an ICED model generated with ICED_syntax()
+#' 
+#' @param model lavaan model syntax, generated with ICED_syntax
+#' @param data specify data to be analysed - repeated measures variable names must correspond to separate variables in the data (wide format) 
+#' @param boot run bootstrapped analysis to extract 95% CIs for the ICC and ICC2 estimates
+#' @param ncores specify the number of cores to run with boot, defaults to 1
+#' @return returns a list of estimated variances and reliability coefficients and the lavaan output
+#' 
+#' @examples 
+#' \dontrun{
+#' ## see online documentation for full examples
+#' https://github.com/sdparsons/ICED
+#' 
+#' # generate data structure and syntax
+#' struc <- data.frame(time = c("T1", "T2", "T3", "T4"),
+#' day = c("day1","day1","day2","day2"),
+#' session = c("ses1", "ses1","ses2", "ses3"))
+#' 
+#' syn <- iced_syntax(struc)
+#' 
+#' # generate data
+#' sim1 <- sim_ICED(struc,
+#' variances = list(time = 10,
+#'                day = 2,
+#'                  session = 1,
+#'                  error = 3),
+#' n = 2000)
+#' 
+#' res1 <- run_ICED(model = syn,
+#' data = sim1)
+#' }
+#' 
+#' @import lavaan
+#' @import boot
+#' 
+#' @export
 
 
 run_ICED <- function(model = NULL,
                      data = NULL,
-                     boot = NULL) {
+                     boot = NULL,
+                     ncores = NULL) {
 
 result1 <- lavaan::lavaan(data = data, # for testing
                   model = model,
@@ -88,7 +115,7 @@ compute.numeric <- function(chiByN) {
   return(ecr$minimum)
 }
 
-ECR <- compute.numeric(lambda) # .737 (expected .935)
+ECR <- compute.numeric(lambda)
 
 # Finally (see Appendix 2), compute effective error from reliability knowing that reliability=true_variance / (true_variance + error) and knowing both reliability and true_variance
 
@@ -107,11 +134,15 @@ ICC2 <- var_values[1, "est"] / (var_values[1, "est"] + efferr)
 
 if(!is.null(boot)) {
 # ICC
+
+  if(!is.null(ncores))  {ncores = 1}
+  
 ICC_booted <- boot::boot(data = data,
                          model = model,
                          statistic = ICC_boot_fun,
                          R = boot,
-                         parallel = "multicore")
+                         parallel = "multicore",
+                         ncpus = ncores)
 
 quantile(ICC_booted$t, c(.025, .975))
 
@@ -171,6 +202,8 @@ phi <- var_values$est[1] /
 output$phi_dependability <- phi
 
 output$lavaan <- result1
+
+output$est_cov <- cov1
 
 print(output)
 

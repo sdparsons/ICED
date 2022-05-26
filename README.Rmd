@@ -44,7 +44,7 @@ syn <- iced_syntax(struc)
 
 ## simulate data
 
-We'll simulate data to run the ICED model on. The `sim_ICED` function takes the model structure dataframe we used earlier and a list of variances for each latent variable.
+We'll simulate data to run the ICED model on. The `sim_ICED` function takes the model structure dataframe we used earlier and a list of variances for each latent variable. The function returns several outputs, including the simulated data. 
 
 ```{r}
 sim1 <- sim_ICED(struc,
@@ -54,7 +54,7 @@ sim1 <- sim_ICED(struc,
                                   error = 3),
                  n = 2000)
 
-head(sim1)
+head(sim1$data)
 
 ```
 
@@ -96,11 +96,11 @@ str2cov(struc,
 
 ## run_ICED
 
-we can now run our model. The `run_ICED` function will print a bunch of relevant outputs
+we can now run our model. The `run_ICED` function will print a bunch of relevant outputs. Note that the `sim_ICED` function returns a list of objects, so we need to specify the data part
 
 ```{r}
 res1 <- run_ICED(model = syn,
-                 data = sim1)
+                 data = sim1$data)
 
 ```
 
@@ -108,7 +108,7 @@ we can also bootstrap our estimates. The output now includes 95% CIs on the ICC 
 
 ```{r}
 run_ICED(model = syn,
-         data = sim1,
+         data = sim1$data,
          boot = 10)
 
 ```
@@ -125,7 +125,7 @@ syntax2 <- iced_syntax(struc,
                                          res1$eest))
 
 res2 <- run_ICED(syntax2,
-                 sim1)
+                 sim1$data)
 
 anova(res1$lavaan,
       res2$lavaan)
@@ -163,11 +163,11 @@ variances_lo <- list(time = 2,
 
 sim_hi <- sim_ICED(structure = struc,
                  variances = variances_hi,
-                 n = 100)
+                 n = 100)$data
 
 sim_lo <- sim_ICED(structure = struc,
                  variances = variances_lo,
-                 n = 100)
+                 n = 100)$data
 
 sim_hi$group <- "high"
 sim_lo$group <- "low"

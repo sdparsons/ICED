@@ -1,0 +1,23 @@
+Package: ICED
+Title: IntraClass Effect Decomposition
+Version: 0.0.1
+Authors@R: 
+    person("Sam", "Parsons", , "sam.parsons@radboudumc.nl", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-7048-4093"))
+Maintainer: Sam Parsons <sam.parsons@radboudumc.nl>
+Description: IntraClass Effect Decomposition.  Unofficial version release
+    name: "".
+License: MIT + file LICENSE
+URL: https://github.com/sdparsons/ICED
+BugReports: https://github.com/sdparsons/ICED
+Imports:
+    boot,
+    knitr,
+    lavaan,
+    MASS,
+    stringr
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1

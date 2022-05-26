@@ -1,10 +1,28 @@
-# iced_syntax function. 
-# intended to recreate lavaan syntax for ICED models
-
-# assumes a structure data.frame similar to the following. With each variable being a source of variance. The first is expected to be time. 
-# structure <- data.frame(time = c("T1", "T2", "T3", "T4"),
-#                         day = c("day1","day1","day2","day2"),
-#                         session = c("session1", "session1","session2", "session3"))
+#' iced_syntax function - generates lavaan syntax for ICED models
+#' 
+#'  The function takes a dataframe describing the data structure and returns lavaan syntax to run the model
+#' 
+#' @param structure data.frame describing the structure of the data, with each variable covering a design aspect - see example. Note: currently the first variable must be time and include a different value for each repeated measure.
+#' @param fix_lower_bounds fixes error variance estimates to be positive, defaults to TRUE
+#' @param set_variances allows the user to specify a list of variances for each latent variable
+#' @param e_label user defined variable name of the error variance. defaults to "e"
+#' @param print option to print the syntax to the console. defaults to TRUE
+#' @param groups allows the user to specify a number or list of group names. The syntax will generate separate latent variable variances to estimate for each group
+#' @param groups_inequality allows the user to specify which variance components they wish to allow to vary between groups. Useful for model comparisons. 
+#' 
+#' @return returns a character string for the ICED model following lavaan syntax
+#' @examples 
+#' \dontrun{
+#' ## see online documentation for full examples
+#' https://github.com/sdparsons/ICED
+#' structure <- data.frame(time = c("T1", "T2", "T3", "T4"),
+#'                         day = c("day1","day1","day2","day2"),
+#'                         session = c("session1", "session1","session2", "session3"))
+#' }
+#' 
+#' @importFrom stringr str_replace_all
+#'
+#' @export                          
 
 
 iced_syntax <- function(structure, 
@@ -12,7 +30,8 @@ iced_syntax <- function(structure,
                         set_variances = NULL,
                         e_label = "e",
                         print = TRUE,
-                        groups = NULL) {
+                        groups = NULL,
+                        groups_inequality = NULL) {
 
 structure[] <- lapply(structure, as.character)
   
@@ -151,7 +170,14 @@ final_syntax <- paste("! regressions",
 if(!is.null(groups)) {
   if(!is.numeric(groups) && !is.character(groups)) {stop("groups must be numeric or vector of character")}
   
-  lat_list <- c(colnames(structure), e_label)
+  if(is.null(groups_inequality)) {
+    lat_list <- c(colnames(structure), e_label)
+  }
+  
+  if(!is.null(groups_inequality)) {
+    lat_list <- groups_inequality
+  }
+  
   
   if(is.numeric(groups)) {
     groups_list <- 1:groups
@@ -164,9 +190,9 @@ if(!is.null(groups)) {
     
     final_syntax <- 
       stringr::str_replace_all(string = final_syntax,
-                           pattern = paste(i,"\\*",
+                           pattern = paste(" ", i,"\\*",
                                            sep = ""),
-                           replacement = paste("c(",
+                           replacement = paste(" c(",
                                             paste(paste("lat",i,sep=""),
                                                   groups_list,
                                                   collapse = ",", 
@@ -188,7 +214,7 @@ if(fix_lower_bounds == TRUE &
   
   if(is.null(groups)) {
   lower <- paste("\n",
-        colnames(structure),
+        c(colnames(structure), e_label),
         " > 0.0001 ",
         sep = "",
         collapse = "")
