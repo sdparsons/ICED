@@ -47,6 +47,16 @@ sim_ICED <- function(structure,
                      n,
                      check_recovery = FALSE) {
   
+# tests
+  if(!is.data.frame(structure)) {warning("structure must be a data.frame")}
+  if(!is.list(variances)) {warning("variances must be a list")}
+  if((ncol(structure)+1) != length(variances)) {warning("structure must contain 1 fewer variable than the list of variances (structure excludes error)")}
+  if(!all(colnames(structure) %in% names(variances))) {warning("variances list must contain the same variable names as structure, plus e_label")}
+  if(!is.numeric(n)) {warning("n must be numeric")}
+  if(!is.logical(check_recovery)) {warning("check_recovery must be TRUE or FALSE")}
+  
+  
+  
   #  prepare output object 
   
   out <- list(call = list(structure = structure,

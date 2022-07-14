@@ -10,11 +10,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library("lavaan")
 
-source("ICED_syntax.R")
-source("ICED_run.R")
-source("ICED_boot.R")
-source("str2cov.R")
-source("sim_ICED.R")
+source("R/ICED_syntax.R")
+source("R/ICED_run.R")
+source("R/ICED_boot.R")
+source("R/str2cov.R")
+source("R/sim_ICED.R")
 
 ```
 
@@ -30,7 +30,7 @@ This script is intended to highlight progress and functionality with the ICED pa
 
 The `ICED_syntax()` function takes a dataframe and generates the lavaan syntax to run the model (the first variable must be time). Here we save it to the `syn` object. The model will also be printed to the console. We are aiming to recreate the model from Brandmaier et al. (2018), Figure 4
 
-![Brandmaier et al. (2018) Figure 4](elife-35718-fig4-v2.jpg){width=50%}
+![Brandmaier et al. (2018) Figure 4](inst/elife-35718-fig4-v2.jpg){width=50%}
 
 
 ```{r}
@@ -89,7 +89,8 @@ str2cov(struc,
         list(time = 10,
              day = 2,
              session = 1,
-             error = 3))
+             error = 3),
+        e_label = "error")
 
 ```
 

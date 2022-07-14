@@ -33,6 +33,23 @@ iced_syntax <- function(structure,
                         groups = NULL,
                         groups_inequality = NULL) {
 
+  
+# tests (more may be needed)
+  if(!is.data.frame(structure)) {warning("structure must be a data.frame")}
+  if(!is.logical(fix_lower_bounds)) {warning("fix_lower_bounds must be TRUE or FALSE")}
+  if(!is.null(set_variances) & !is.list(set_variances)) {warning("set_variances must be list")}  
+  if(!is.character(e_label)) {warning("e_label must be a character string")}
+  if(!is.logical(print)) {warning("print must be TRUE or FALSE")}
+  if(!is.null(set_variances)) {
+  if((ncol(structure)+1) != length(set_variances)) {warning("structure must contain 1 fewer variable than the list of variances (structure excludes error)")}
+  }
+  if(is.null(set_variances)) {
+  if(!all(c(colnames(structure),e_label) == names(set_variances))) {warning("variances list must contain the same variable names as structure, plus e_label")}
+  }
+  
+  if(!is.null(groups_inequality) & !is.character(groups_inequality)) {warning("groups_inequality must be vector of strings")}
+  
+  
 structure[] <- lapply(structure, as.character)
   
 ## regressions =~
@@ -170,11 +187,19 @@ final_syntax <- paste("! regressions",
 if(!is.null(groups)) {
   if(!is.numeric(groups) && !is.character(groups)) {stop("groups must be numeric or vector of character")}
   
+  
+  # groups inequality conditions
+  # tests/checks
+  
+  
+  
   if(is.null(groups_inequality)) {
     lat_list <- c(colnames(structure), e_label)
   }
   
   if(!is.null(groups_inequality)) {
+    if(!all(groups_inequality %in% c(colnames(structure), e_label))) {warning("variables in groups_inequality must be variables in structure")}
+    
     lat_list <- groups_inequality
   }
   
@@ -220,6 +245,7 @@ if(fix_lower_bounds == TRUE &
         collapse = "")
   }
   
+  # for groups
   if(is.numeric(groups)) {
   lower <- paste("\n",
                  paste("lat",
@@ -231,6 +257,7 @@ if(fix_lower_bounds == TRUE &
                  collapse = "")
   }
   
+  # for groups
   if(is.character(groups)) {
   lower <- paste("\n",
                  paste("lat",
@@ -255,7 +282,7 @@ if(!is.null(set_variances)) {
   variances <- c(colnames(structure), e_label)
   
   if(length(variances) != length(set_variances) ) {
-    print("cannot run - set_variances is of incorrect length")
+    warning("cannot run - set_variances is of incorrect length")
   }
   
   set_variances <- paste("\n",

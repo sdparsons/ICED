@@ -34,6 +34,7 @@
 #' 
 #' @import lavaan
 #' @import boot
+#' @importFrom parallel detectCores
 #' 
 #' @export
 
@@ -42,6 +43,18 @@ run_ICED <- function(model = NULL,
                      data = NULL,
                      boot = NULL,
                      ncores = NULL) {
+  
+  
+# tests 
+  if(!is.character(model)) {warning("model must be character string compatible with lavaan syntax")}
+  if(!is.data.frame(data)) {warning("data must be data frame")}
+  if(!is.null(boot) & !is.numeric(boot)) {warning("boot must be numeric")}
+  if(!is.null(ncores) & !is.numeric(ncores)) {warning("ncores must be numeric")}
+  if(!is.null(ncores)){
+    if(ncores > parallel::detectCores()) {warning("ncores cannot be greater than the number of cores available. check parallel::detectCores()")}
+  }
+  
+  
 
 result1 <- lavaan::lavaan(data = data, # for testing
                   model = model,
@@ -135,7 +148,7 @@ ICC2 <- var_values[1, "est"] / (var_values[1, "est"] + efferr)
 if(!is.null(boot)) {
 # ICC
 
-  if(!is.null(ncores))  {ncores = 1}
+  if(is.null(ncores))  {ncores = 1}
   
 ICC_booted <- boot::boot(data = data,
                          model = model,

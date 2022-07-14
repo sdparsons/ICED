@@ -4,7 +4,7 @@
 \alias{str2cov}
 \title{converts a ICED measurement structure data.frame and a vector}
 \usage{
-str2cov(structure, variances, e_label)
+str2cov(structure, variances, e_label = "e")
 }
 \arguments{
 \item{structure}{data.frame describing the structure of the data, with each variable convering a design aspect - see example. Note: currently the first variable must be time and include a different value for each repeated measure.}
@@ -21,10 +21,14 @@ helper function to generate an expected covariance matrix from an ICED measureme
 }
 \examples{
 \dontrun{
+struc <- data.frame(time = c("T1", "T2", "T3", "T4"),
+day = c("day1","day1","day2","day2"),
+session = c("ses1", "ses1","ses2", "ses3"))
+ 
 str2cov(struc,
 list(time = 10,
      day = 2,
      session = 1,
-     error = 3))
+     e = 3))
 }
 }

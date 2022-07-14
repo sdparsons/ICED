@@ -13,17 +13,32 @@
 #' 
 #' @examples
 #' \dontrun{
+#' struc <- data.frame(time = c("T1", "T2", "T3", "T4"),
+#' day = c("day1","day1","day2","day2"),
+#' session = c("ses1", "ses1","ses2", "ses3"))
+#'  
 #' str2cov(struc,
 #' list(time = 10,
 #'      day = 2,
 #'      session = 1,
-#'      error = 3))
+#'      e = 3))
 #' }
 
 
 str2cov <- function(structure,
                     variances,
-                    e_label) {
+                    e_label = "e") {
+  
+  
+  # tests
+  
+  if(!is.data.frame(structure)) {warning("structure must be a data.frame")}
+  if(!is.list(variances)) {warning("variances must be a list")}
+  if((ncol(structure)+1) != length(variances)) {warning("structure must contain 1 fewer variable than the list of variances (structure excludes error)")}
+  if(!all(c(colnames(structure),e_label) ==  names(variances))) {warning("variances list must contain the same variable names as structure, plus e_label")}
+  
+  # other tests to add
+
   
   # time variance component
   time1 <- matrix(rep(variances$time, nrow(structure)*nrow(structure)),
