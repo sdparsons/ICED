@@ -2,8 +2,19 @@ Package: ICED
 Title: IntraClass Effect Decomposition
 Version: 0.0.1
 Authors@R: 
-    person("Sam", "Parsons", , "sam.parsons@radboudumc.nl", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-7048-4093"))
+    c(person(given = "Sam",
+             family = "Parsons",
+             email = "sam.parsons@radboudumc.nl", 
+             role = c("aut", "cre"),
+             comment = c(ORCID = "0000-0002-7048-4093")),
+      person(given = "Rogier",
+             family = "Kievit",
+             role = c("aut"),
+             comment = c(ORCID = "0000-0003-0700-4568")),
+      person(given = "Andreas",
+             family = "Brandmaier",
+             role = c("aut"),
+             comment = c(ORCID = "0000-0001-8765-6982")))
 Maintainer: Sam Parsons <sam.parsons@radboudumc.nl>
 Description: IntraClass Effect Decomposition. Unofficial version release
     name: "Good work squirrels".

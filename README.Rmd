@@ -136,7 +136,7 @@ anova(res1$lavaan,
 
 # group comparisons
 
-we can use `iced_syntax` to generate the syntax for multiple groups. The user can specify a number of groups or a vector of strings. Here we'll also highlight that we can set the variances to be greater than zero also.
+we can use `iced_syntax` to generate the syntax for multiple groups. The user can specify a number of groups or a vector of strings. Here we'll also highlight that we can set the variances to be greater than zero also. Note the changes to the lavaan syntax, specifically that group specific latents are created. The `groups_inequality` option can be used to specify the latents we wish to allow to vary across groups (useful for model comparison tests).
 
 ```{r}
 group_syntax <- iced_syntax(struc,
@@ -196,3 +196,12 @@ summary(m0)
 anova(m1, m0)
 
 ```
+
+
+## Future plans for the ICED package
+
+* Implement Effective Curve Reliability (Latent Growth Curve models) into, or as new functions, ICED_syntax, ICED_boot, ICED_run, sim_ICED
+* simulation study to showcase the robustness and main influencers of parameter estimates
+* possible vignettes
+* some kind of error checks
+* bayesian implementation? not sure it'd work for ICC2 though

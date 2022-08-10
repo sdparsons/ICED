@@ -23,6 +23,7 @@ ICED v0.0.1 [Unofficial version release name: "Good work squirrels"]
 ==============
 changes:
 * began converting to package format
+* first attempted release
 
 
 
@@ -32,7 +33,7 @@ changes:
 
 
 
-# Other upcoming version names
+# Other upcoming version names tbd
 * "water..."
 * "BIRDS! isa bird!"
 * "Duggie has his programming in R badge"

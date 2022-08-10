@@ -1,0 +1,11 @@
+citHeader("To cite the R package ICED in publications, please use:")
+
+citEntry(
+  entry        = "Misc",
+  title        = "ICED: IntraClass Effect Decomposition",
+  author       = personList(as.person("Sam Parsons"),as.person("Rogier Kievit"),as.person("Andreas Brandmaier")),
+  url          = "https://github.com/sdparsons/ICED",
+
+  textVersion  = "Parsons, S., Kievit, R., & Brandmaier, A. (2022). ICED: IntraClass Effect Decomposition",
+
+  year = "2022")
