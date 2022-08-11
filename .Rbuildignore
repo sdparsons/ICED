@@ -5,3 +5,5 @@
 ^\.Rproj\.user$
 ^README.Rmd
 ^NEWS.Rmd
+^CRAN-RELEASE$
+^cran-comments.md

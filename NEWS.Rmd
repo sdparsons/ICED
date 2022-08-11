@@ -1,6 +1,7 @@
 ---
-output: html_document
----
+title: "NEWS"
+output: github_document
+------
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
@@ -14,10 +15,10 @@ knitr::opts_chunk$set(
 
 # News
 
-## current intended improvements
+### current intended improvements
 * add bootstrapping for each variance component as well as ICC and ICC2
 
-## changelog
+### changelog
 
 ICED v0.0.1 [Unofficial version release name: "Good work squirrels"]
 ==============
