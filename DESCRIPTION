@@ -18,7 +18,7 @@ Authors@R:
 Maintainer: Sam Parsons <sam.parsons@radboudumc.nl>
 Description: Estimate test-retest reliability for complex sampling strategies 
     and extract variances using IntraClass Effect Decomposition. Developed by
-    Brandmaier et al. (2018) "Assessing reliability in neuroimaging research through intra-class effect decomposition (ICED)" <doi:https://doi.org/10.7554/eLife.35718> 
+    Brandmaier et al. (2018) "Assessing reliability in neuroimaging research through intra-class effect decomposition (ICED)" <doi:10.7554/eLife.35718> 
     Also includes functions to simulate data based on sampling strategy. 
     Unofficial version release name: "Good work squirrels".
 License: MIT + file LICENSE
