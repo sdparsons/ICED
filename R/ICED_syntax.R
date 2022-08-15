@@ -12,13 +12,12 @@
 #' 
 #' @return returns a character string for the ICED model following lavaan syntax
 #' @examples 
-#' \dontrun{
 #' ## see online documentation for full examples
-#' https://github.com/sdparsons/ICED
+#' # https://github.com/sdparsons/ICED
 #' structure <- data.frame(time = c("T1", "T2", "T3", "T4"),
 #'                         day = c("day1","day1","day2","day2"),
 #'                         session = c("session1", "session1","session2", "session3"))
-#' }
+#' 
 #' 
 #' @importFrom stringr str_replace_all
 #'

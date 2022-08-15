@@ -16,8 +16,11 @@ Authors@R:
              role = c("aut"),
              comment = c(ORCID = "0000-0001-8765-6982")))
 Maintainer: Sam Parsons <sam.parsons@radboudumc.nl>
-Description: IntraClass Effect Decomposition. Unofficial version release
-    name: "Good work squirrels".
+Description: Estimate test-retest reliability for complex sampling strategies 
+    and extract variances using IntraClass Effect Decomposition. Developed by
+    Brandmaier et al. (2018) "Assessing reliability in neuroimaging research through intra-class effect decomposition (ICED)" <doi:https://doi.org/10.7554/eLife.35718> 
+    Also includes functions to simulate data based on sampling strategy. 
+    Unofficial version release name: "Good work squirrels".
 License: MIT + file LICENSE
 URL: https://github.com/sdparsons/ICED
 BugReports: https://github.com/sdparsons/ICED

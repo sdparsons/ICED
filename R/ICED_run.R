@@ -9,9 +9,8 @@
 #' @return returns a list of estimated variances and reliability coefficients and the lavaan output
 #' 
 #' @examples 
-#' \dontrun{
 #' ## see online documentation for full examples
-#' https://github.com/sdparsons/ICED
+#' # https://github.com/sdparsons/ICED
 #' 
 #' # generate data structure and syntax
 #' struc <- data.frame(time = c("T1", "T2", "T3", "T4"),
@@ -29,8 +28,8 @@
 #' n = 2000)
 #' 
 #' res1 <- run_ICED(model = syn,
-#' data = sim1)
-#' }
+#' data = sim1$data)
+#' 
 #' 
 #' @import lavaan
 #' @import boot

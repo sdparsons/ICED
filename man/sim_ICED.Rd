@@ -23,7 +23,6 @@ sim_ICED simulates n x p data frame based on ICED model structure,
 selected variance components, and specified n
 }
 \examples{
-\dontrun{
 # compare recovery of variance parameters
 
 # ICED structure
@@ -46,7 +45,6 @@ sim_ICED(struc,
                           error = 3),
          n = 2000,
          check_recovery = TRUE)
-}
 
 
 }

@@ -9,7 +9,6 @@
 #' @return list including simulated data
 #' 
 #' @examples
-#' \dontrun{
 #' # compare recovery of variance parameters
 #' 
 #' # ICED structure
@@ -32,7 +31,6 @@
 #'                           error = 3),
 #'          n = 2000,
 #'          check_recovery = TRUE)
-#' }
 #' 
 #' 
 #' @importFrom MASS mvrnorm

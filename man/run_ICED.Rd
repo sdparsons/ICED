@@ -22,9 +22,8 @@ returns a list of estimated variances and reliability coefficients and the lavaa
 Wrapper function for lavaan to run an ICED model generated with ICED_syntax()
 }
 \examples{
-\dontrun{
 ## see online documentation for full examples
-https://github.com/sdparsons/ICED
+# https://github.com/sdparsons/ICED
 
 # generate data structure and syntax
 struc <- data.frame(time = c("T1", "T2", "T3", "T4"),
@@ -42,7 +41,7 @@ variances = list(time = 10,
 n = 2000)
 
 res1 <- run_ICED(model = syn,
-data = sim1)
-}
+data = sim1$data)
+
 
 }
