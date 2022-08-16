@@ -12,7 +12,6 @@
 #' @export
 #' 
 #' @examples
-#' \dontrun{
 #' struc <- data.frame(time = c("T1", "T2", "T3", "T4"),
 #' day = c("day1","day1","day2","day2"),
 #' session = c("ses1", "ses1","ses2", "ses3"))
@@ -22,7 +21,7 @@
 #'      day = 2,
 #'      session = 1,
 #'      e = 3))
-#' }
+#' 
 
 
 str2cov <- function(structure,

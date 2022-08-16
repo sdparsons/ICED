@@ -1,6 +1,6 @@
 # ICED_boot
 
-# functions for bootstrapping the ICED models to obtain CIs around the ICC and ICC2
+# internal functions for bootstrapping the ICED models to obtain CIs around the ICC and ICC2
 
 # library("boot")
 
@@ -45,26 +45,6 @@ ICC_boot_fun <- function(model, data, indices){
   return(ICC)
   
 }
-
-# ICC_boot_fun(data = dat,
-#               model = model1)
-# 
-# ICC_booted <- boot::boot(data = dat,
-#                           model = model1,
-#                           statistic = ICC_boot_fun,
-#                           R = 1000,
-#                           parallel = "multicore")
-# 
-# quantile(ICC_booted$t, c(.025, .975))
-# 
-# hist(ICC_booted$t)
-# 
-# ICC_booted_CIs <- boot.ci(ICC_booted,
-#                            type = "bca")
-# 
-# ICC_lower <- ICC_booted_CIs$bca[4]
-# ICC_upper <- ICC_booted_CIs$bca[5]
-
 
 #ICC2
 
@@ -135,21 +115,3 @@ ICC2_boot_fun <- function(model, data, indices) {
   return(ICC2)
 }
 
-# ICC2_boot_fun(data = dat,
-#               model = model1)
-# 
-# ICC2_booted <- boot::boot(data = dat,
-#            model = model1,
-#            statistic = ICC2_boot_fun,
-#            R = 1000,
-#            parallel = "multicore")
-# 
-# quantile(ICC2_booted$t, c(.025, .975))
-# 
-# hist(ICC2_booted$t)
-# 
-# ICC2_booted_CIs <- boot.ci(ICC2_booted,
-#         type = "bca")
-# 
-# ICC2_lower <- ICC2_booted_CIs$bca[4]
-# ICC2_upper <- ICC2_booted_CIs$bca[5]
