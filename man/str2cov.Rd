@@ -20,7 +20,6 @@ returns a matrix
 helper function to generate an expected covariance matrix from an ICED measurement structure and vector of variances. Not expected to be called directly, but used within sim_ICED
 }
 \examples{
-\dontrun{
 struc <- data.frame(time = c("T1", "T2", "T3", "T4"),
 day = c("day1","day1","day2","day2"),
 session = c("ses1", "ses1","ses2", "ses3"))
@@ -30,5 +29,5 @@ list(time = 10,
      day = 2,
      session = 1,
      e = 3))
-}
+
 }
