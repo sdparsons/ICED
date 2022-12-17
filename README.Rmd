@@ -8,13 +8,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-library("lavaan")
-
-source("R/ICED_syntax.R")
-source("R/ICED_run.R")
-source("R/ICED_boot.R")
-source("R/str2cov.R")
-source("R/sim_ICED.R")
+library("ICED")
 
 ```
 
@@ -68,7 +62,6 @@ sim2 <- sim_ICED(struc,
                                   error = 3),
                  n = 2000,
                  check_recovery = TRUE)
-
 
 sim3 <- sim_ICED(struc,
                  variances = list(time = 10,

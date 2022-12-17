@@ -41,12 +41,16 @@
 #' @export
 
 sim_ICED <- function(structure,
+                     means = NULL,
                      variances,
                      n,
                      check_recovery = FALSE) {
   
 # tests
   if(!is.data.frame(structure)) {warning("structure must be a data.frame")}
+  if(is.null(means)) {means <- rep(0, nrow(structure))}
+  if(!is.numeric(means)) {warning("means must be a numeric vector")}
+  if(length(means) != nrow(structure)) {warning("the means vector must be of the same length as the number of repeated measures")}
   if(!is.list(variances)) {warning("variances must be a list")}
   if((ncol(structure)+1) != length(variances)) {warning("structure must contain 1 fewer variable than the list of variances (structure excludes error)")}
   if(!all(colnames(structure) %in% names(variances))) {warning("variances list must contain the same variable names as structure, plus e_label")}
@@ -58,6 +62,7 @@ sim_ICED <- function(structure,
   #  prepare output object 
   
   out <- list(call = list(structure = structure,
+                          means = means,
                           variances = variances,
                           n = n,
                           check_recovery = check_recovery))  
@@ -71,9 +76,13 @@ sim_ICED <- function(structure,
                      e_label = e_label)
   
   # simulate data based on this structure
-  sim <- MASS::mvrnorm(n = n,
-                       mu = rep(0, nrow(sim_cov)),
-                       Sigma = sim_cov)
+  # sim <- MASS::mvrnorm(n = n,
+  #                      mu = rep(0, nrow(sim_cov)),
+  #                      Sigma = sim_cov)
+  
+   sim <- MASS::mvrnorm(n = n,
+                        mu = means,
+                        Sigma = sim_cov)
   
   sim <- as.data.frame(sim)
   
