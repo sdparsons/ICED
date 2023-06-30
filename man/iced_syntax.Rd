@@ -9,7 +9,9 @@ iced_syntax(
   fix_lower_bounds = TRUE,
   set_variances = NULL,
   e_label = "e",
+  e_variance_equality = TRUE,
   print = TRUE,
+  growth = FALSE,
   groups = NULL,
   groups_inequality = NULL
 )
@@ -22,6 +24,8 @@ iced_syntax(
 \item{set_variances}{allows the user to specify a list of variances for each latent variable}
 
 \item{e_label}{user defined variable name of the error variance. defaults to "e"}
+
+\item{e_variance_equality}{defaults to TRUE, indicating that the error variances are set to be equal - setting to FALSE allows the error variances to vary}
 
 \item{print}{option to print the syntax to the console. defaults to TRUE}
 

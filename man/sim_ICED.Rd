@@ -4,7 +4,15 @@
 \alias{sim_ICED}
 \title{simulates data based on ICED model structure and list of variances}
 \usage{
-sim_ICED(structure, variances, n, check_recovery = FALSE)
+sim_ICED(
+  structure,
+  means = NULL,
+  variances,
+  n,
+  growth = FALSE,
+  int_slope_covariance = FALSE,
+  check_recovery = FALSE
+)
 }
 \arguments{
 \item{structure}{data.frame describing the structure of the data, with each variable covering a design aspect - see example. Note: currently the first variable must be time and include a different value for each repeated measure.}

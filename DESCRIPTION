@@ -28,6 +28,7 @@ Imports:
     boot,
     knitr,
     lavaan,
+    magrittr,
     MASS,
     stringr
 VignetteBuilder: 

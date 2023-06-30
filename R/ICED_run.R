@@ -202,6 +202,8 @@ for(i in var_values$id){
   output[[i]] <- var_values[var_values["id"] == i,"est"]
 }
 
+output$ECR <- ECR
+
 output$EffectiveError <- efferr
 
 absolute <- sum(var_values$est[2:nrow(var_values)] / var_values$id_n[2:nrow(var_values)])

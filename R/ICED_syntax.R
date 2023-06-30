@@ -6,6 +6,7 @@
 #' @param fix_lower_bounds fixes error variance estimates to be positive, defaults to TRUE
 #' @param set_variances allows the user to specify a list of variances for each latent variable
 #' @param e_label user defined variable name of the error variance. defaults to "e"
+#' @param e_variance_equality defaults to TRUE, indicating that the error variances are set to be equal - setting to FALSE allows the error variances to vary
 #' @param print option to print the syntax to the console. defaults to TRUE
 #' @param groups allows the user to specify a number or list of group names. The syntax will generate separate latent variable variances to estimate for each group
 #' @param groups_inequality allows the user to specify which variance components they wish to allow to vary between groups. Useful for model comparisons. 
@@ -28,7 +29,9 @@ iced_syntax <- function(structure,
                         fix_lower_bounds = TRUE, 
                         set_variances = NULL,
                         e_label = "e",
+                        e_variance_equality = TRUE,
                         print = TRUE,
+                        growth = FALSE,
                         groups = NULL,
                         groups_inequality = NULL) {
 
@@ -48,10 +51,14 @@ iced_syntax <- function(structure,
   
   if(!is.null(groups_inequality) & !is.character(groups_inequality)) {warning("groups_inequality must be vector of strings")}
   
+  # new tests to incorporate growth models
+
   
 structure[] <- lapply(structure, as.character)
   
 ## regressions =~
+
+if(growth == FALSE) {
 
 # time latent - assumes first variable in structure is time
 lat_time <- paste("T",
@@ -59,6 +66,33 @@ lat_time <- paste("T",
                   paste("1*", structure$time, sep = ""),
                   sep = "",
                   collapse = '\n')
+}
+
+if(growth == TRUE) {
+  
+  # slope (slope needs to come first for ECR purposes, later)
+  lat_slope <- paste("S",
+                     " =~ ", 
+                     paste(0:(length(structure$time)-1), "*", structure$time, sep = ""),
+                     sep = "",
+                     collapse = '\n')
+
+    slope_resid <- "S ~~ slope_var*S"
+  slope_mean <- "S ~ slope_mean*1"
+  
+  # intercept
+  lat_intercept <- paste("I",
+                         " =~ ", 
+                         paste("1*", structure$time, sep = ""),
+                         sep = "",
+                         collapse = '\n')
+
+  intercept_resid <- "I ~~ intercept_var*I"
+  intercept_mean <- "I ~ intercept_mean*1"
+  
+  # intercept slope cor
+    I_S_cor <- "I ~~ iscor*S"
+}
 
 # other latent variables, i.e. potential sources of variance
 lat_structure <- NULL
@@ -82,11 +116,14 @@ lat_errors <- paste("E",
 
 ## residuals, variances, covariances
 
+if(growth == FALSE) {
 # time variance
 time_resid <- paste("T ~~ ",
                     colnames(structure)[1],
                     "*T",
                     sep = "")
+
+}
 
 # covariances - constrained to equal variances
 co_vars <- NULL
@@ -114,6 +151,7 @@ if(ncol(structure) > 1) {
 }
 
 # error covariances - constrained to equal variance
+if(e_variance_equality == TRUE){
 co_err <- paste(
   paste("E",1:length(structure$time), sep = ""),
   " ~~ ",
@@ -121,40 +159,53 @@ co_err <- paste(
   paste("E",1:length(structure$time), sep = ""),
   sep = "",
   collapse = '\n')
-  
+}
+
+if(e_variance_equality == FALSE){
+  co_err <- paste(
+    paste("E",1:length(structure$time), sep = ""),
+    " ~~ ",
+    paste(e_label,1:length(structure$time), sep = ""),
+    "*",
+    paste("E",1:length(structure$time), sep = ""),
+    sep = "",
+    collapse = '\n')
+}
+
   
 # constrain loadings for each latent to each other to 0
+# dont think this is actually needed
 
-if(ncol(structure == 1)){
-latents <- as.vector(c("T",
-                       paste("E",1:length(structure$time), sep = "")
-))
-}
-
-if(ncol(structure) > 1) {
-latents <- as.vector(c("T",
-                       as.character(unique(unlist(structure[,2:length(structure)]))),
-                       paste("E",1:length(structure$time), sep = "")
-                     ))
-}
-
-
-latents_combined <- combn(latents, 2)
-latents_syntax <- paste(latents_combined[1,1],
-                        " ~~ 0*",
-                        latents_combined[2,1],
-                        sep = "")
-
-for(i in 2:ncol(latents_combined)){
-  latents_syntax <- paste(latents_syntax,
-    paste(latents_combined[1,i],
-          " ~~ 0*",
-          latents_combined[2,i],
-          sep = ""),
-    sep = "\n",
-    collapse = "\n"
-  )
-}
+# if(ncol(structure == 1)){
+# latents <- as.vector(c("T",
+#                        paste("E",1:length(structure$time), sep = "")
+# ))
+# }
+# 
+# if(ncol(structure) > 1) {
+# latents <- as.vector(c("T",
+#                        as.character(unique(unlist(structure[,2:length(structure)]))),
+#                        paste("E",1:length(structure$time), sep = "")
+#                      ))
+# }
+# 
+# 
+# latents_combined <- combn(latents, 2)
+# latents_syntax <- paste(latents_combined[1,1],
+#                         " ~~ 0*",
+#                         latents_combined[2,1],
+#                         sep = "")
+# 
+# for(i in 2:ncol(latents_combined)){
+#   latents_syntax <- paste(latents_syntax,
+#     paste(latents_combined[1,i],
+#           " ~~ 0*",
+#           latents_combined[2,i],
+#           sep = ""),
+#     sep = "\n",
+#     collapse = "\n"
+#   )
+# }
 
 # observed means
 obs_means <- paste(structure$time, 
@@ -164,6 +215,7 @@ obs_means <- paste(structure$time,
 
 
 # combine syntax
+if(growth == FALSE){
 final_syntax <- paste("! regressions",
                lat_time,
                lat_structure,
@@ -172,14 +224,36 @@ final_syntax <- paste("! regressions",
                time_resid,
                co_vars,
                co_err,
-               latents_syntax,
+               #latents_syntax,
                "! observed means",
                obs_means,
                sep = "\n",
                collapse = '\n'
                )
+}
 
 
+if(growth == TRUE){
+  final_syntax <- paste("! regressions",
+                        lat_slope,
+                        slope_resid,
+                        lat_intercept,
+                        intercept_resid,
+                        slope_mean,
+                        intercept_mean,
+                        lat_structure,
+                        lat_errors,
+                        "! residuals, variances and covariances",
+                        I_S_cor,
+                        co_vars,
+                        co_err,
+                        #latents_syntax,
+                        "! observed means",
+                        obs_means,
+                        sep = "\n",
+                        collapse = '\n'
+  )
+}
 
 # syntax manipulation for multi group 
 
@@ -237,11 +311,37 @@ if(fix_lower_bounds == TRUE &
    is.null(set_variances)) {
   
   if(is.null(groups)) {
-  lower <- paste("\n",
+    if(e_variance_equality == TRUE){
+    lower <- paste("\n",
         c(colnames(structure), e_label),
         " > 0.0001 ",
         sep = "",
         collapse = "")
+    }
+    
+    if(e_variance_equality == FALSE){
+      lower <- paste("\n",
+                c(colnames(structure), 
+                paste(e_label, 1:length(structure$time), sep = "")),
+                " > 0.0001 ",
+                sep = "",
+                collapse = "")
+    }
+  
+  
+  
+  if(growth == TRUE) {
+    if(e_variance_equality == TRUE){
+        lower <- paste("\n",
+                   "slope_var > 0.0001",
+                   "\n",
+                   "intercept_var > 0.0001",
+                   "\n",
+                   paste(e_label, " > 0.0001", sep = ""),
+                   sep = "")
+    }
+  }
+  
   }
   
   # for groups
@@ -278,7 +378,16 @@ if(fix_lower_bounds == TRUE &
 if(!is.null(set_variances)) {
   
   if(typeof(set_variances) == "double") {
-  variances <- c(colnames(structure), e_label)
+    if(e_variance_equality == TRUE){
+      variances <- c(colnames(structure), 
+                     e_label)
+    }
+    if(e_variance_equality == FALSE){
+      variances <- c(colnames(structure), 
+                     paste(e_label,
+                           1:length(structure$time),
+                           sep = ""))
+    }
   
   if(length(variances) != length(set_variances) ) {
     warning("cannot run - set_variances is of incorrect length")
@@ -323,8 +432,8 @@ return(final_syntax)
 # 
 # structure <- data.frame(time = c("T1", "T2", "T3"),
 #                          p = c("P1", "P1","P2"))
-# 
-# syntax <- iced_syntax(structure)
+ 
+#syntax <- iced_syntax(structure, e_variance_equality = FALSE)
 # 
 # 
 # # testing fig 6
